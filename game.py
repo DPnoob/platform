@@ -1,2 +1,2 @@
-import setup
-setup.setup()
+import main
+main.startGame() # starts game

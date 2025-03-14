@@ -1,10 +1,16 @@
+# normal imports
 import pygame
+
+# variables used in other files
+
+# imports from other files
 from setup import config
 
+# variables used in this file
 tiles = [pygame.image.load("tile.png")]
 screen = pygame.display.set_mode((config['native sirina'] * config['scale'], config['native visina'] * config['scale']))
 
-for tileID in range(len(tiles)):
+for tileID in range(len(tiles)): # sceling tiles
     tiles[tileID] = pygame.transform.scale(tiles[tileID], (32 * config['scale'], 32 * config['scale']))
 
 
