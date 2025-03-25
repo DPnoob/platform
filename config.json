@@ -1,14 +1,16 @@
 {
-  "resolucija" : "720p",
+  "resolution" : "720p",
   "maxFPS" : 60,
 
 
+  "gravity": 10,
 
 
-
-  "native visina" : 180,
-  "native sirina" : 320,
-  "resolutin to scaling" : {
+  "native hight" : 180,
+  "native width" : 320,
+  "tile size": 20,
+  "player size": 18,
+  "resolution to scaling" : {
     "180p" : 1,
     "720p" : 4,
     "1080p" : 6,
