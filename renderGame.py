@@ -7,9 +7,9 @@ import pygame
 from setup import config
 
 # variables used in this file
-tiles = [pygame.image.load("tile0.png"),
-         pygame.image.load("tile11.png")]
-playerSprite = pygame.image.load("player.png")
+tiles = [pygame.image.load("sprites/tile0.png"),
+         pygame.image.load("sprites/tile11.png")]
+playerSprite = pygame.image.load("sprites/player.png")
 screen = pygame.display.set_mode((config['native width'] * config['scale'], config['native hight'] * config['scale']))
 
 for tileID in range(len(tiles)): # sceling tiles
