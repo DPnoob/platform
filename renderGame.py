@@ -25,5 +25,5 @@ def backround():
 def tile(x, y, tileID: int):
     screen.blit(tiles[tileID], (x * config['scale'], (realY(y) - config['tile size']) * config['scale'] ))
 
-#def player(x, y):
-#    screen.blit(playerSprite, (x  * config['scale'], (realY(y) - config['player size']) * config['scale']))
+def player(x, y):
+    screen.blit(playerSprite, (x  * config['scale'], (realY(y) - config['player size']) * config['scale']))

@@ -11,11 +11,13 @@ import pygame
 def startGame():
     from setup import config, level
     import renderGame
+    import player
 
     running = True
     timeDelay = 0
     pygame.init()
     clock = pygame.time.Clock()
+    player = player.Player(config['tile size'], config['tile size'])
 
     while running:
         # events
@@ -24,7 +26,8 @@ def startGame():
                 running = False
 
         #moving
-
+        player.update(timeDelay)
+        player.move(timeDelay)
 
         # rendering
         renderGame.backround()
@@ -37,11 +40,12 @@ def startGame():
             for x in range(block['x1'], block['x2'] + 1):
                 for y in range(block['y1'], block['y2'] + 1):
                     renderGame.tile(config['tile size'] * x, config['tile size'] * y, block['tileID'])
+        player.render()
 
         # other
         pygame.display.flip()
 
         clock.tick(config['maxFPS'])
-        timeDelay = clock.get_time() / 150 # multiply to get ecurate timing (my_time * timeDelay)
+        timeDelay = clock.get_time() / 50 # multiply to get ecurate timing (my_time * timeDelay)
 
     pygame.quit()
