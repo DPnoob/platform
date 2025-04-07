@@ -17,7 +17,9 @@ class Player:
         self.mass = mass
         self.force = vector.Vector()
         self.acceleration = vector.Vector()
-        self.speed = vector.Vector()
+        #self.speed = vector.Vector()
+        self.speedX = 0
+        self.speedY = 0
         self.acceleration.addY('gravity', -config['gravity'])
 
     def update(self, timeDelay):
@@ -42,6 +44,7 @@ class Player:
 
         #calculating speed
 
+        """
         for i in self.acceleration.vektor:
             if self.speed.getSpecific(i) is None:
                 self.speed.add(i, self.acceleration.getSpecific(i)[0] * timeDelay ** 2, self.acceleration.getSpecific(i)[1])
@@ -59,10 +62,15 @@ class Player:
                 self.speed.addY(i, self.acceleration.getSpecificY(i) * timeDelay ** 2)
             else:
                 self.speed.sizeY(i, self.speed.getSpecificY(i) + self.acceleration.getSpecificY(i) * timeDelay ** 2)
+        """
+        self.speedX += self.acceleration.getX() * timeDelay ** 2
+        self.speedY += self.acceleration.getY() * timeDelay ** 2
 
     def move(self, timeDelay):
-        self.x += self.speed.getX() * timeDelay
-        self.y += self.speed.getY() * timeDelay
+        #self.x += self.speed.getX() * timeDelay
+        #self.y += self.speed.getY() * timeDelay
+        self.x += self.speedX * timeDelay
+        self.y += self.speedY * timeDelay
 
     def render(self):
         renderGame.player(self.x, self.y)
