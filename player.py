@@ -4,7 +4,7 @@
 
 # imports from other files
 import vector
-from setup import config
+from setup import config, level
 import renderGame
 
 # variables used in this file
@@ -71,6 +71,34 @@ class Player:
         #self.y += self.speed.getY() * timeDelay
         self.x += self.speedX * timeDelay
         self.y += self.speedY * timeDelay
+
+    def collision(self):
+        for i in level:
+            if (i['x1'] * config['tile size'] < self.x + config['player size'] and
+                (i['x2'] + 1) * config['tile size'] > self.x):
+
+                if ((i['y2'] + 1) * config['tile size'] > self.y and
+                    (i['y2'] + 1) * config['tile size'] + self.speedY < self.y):
+                    self.speedY = 0
+                    self.y = (i['y2'] + 1) * config['tile size']
+
+                elif (i['y1'] * config['tile size'] < self.y + config['player size'] and
+                    i['y1'] * config['tile size'] + self.speedY > self.y + config['player size']):
+                    self.speedY = 0
+                    self.y = i['y1'] * config['tile size'] - config['player size']
+
+            if (i['y1'] * config['tile size'] < self.y + config['player size'] and
+                (i['y2'] + 1) * config['tile size'] > self.y):
+
+                if ((i['x2'] + 1) * config['tile size'] > self.x and
+                    (i['x2'] + 1) * config['tile size'] + self.speedX < self.x):
+                    self.speedX = 0
+                    self.x = (i['x2'] + 1) * config['tile size']
+
+                elif (i['x1'] * config['tile size'] < self.x + config['player size'] and
+                    i['x1'] * config['tile size'] + self.speedX > self.x + config['player size']):
+                    self.speedX = 0
+                    self.x = i['x1'] * config['tile size'] - config['player size']
 
     def render(self):
         renderGame.player(self.x, self.y)

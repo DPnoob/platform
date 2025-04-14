@@ -28,6 +28,7 @@ def startGame():
         #moving
         player.update(timeDelay)
         player.move(timeDelay)
+        player.collision()
 
         # rendering
         renderGame.backround()
@@ -46,6 +47,7 @@ def startGame():
         pygame.display.flip()
 
         clock.tick(config['maxFPS'])
+        print(player.x, player.y)
         timeDelay = clock.get_time() / 50 # multiply to get ecurate timing (my_time * timeDelay)
 
     pygame.quit()
