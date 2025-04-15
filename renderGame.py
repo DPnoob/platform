@@ -7,7 +7,7 @@ import pygame
 from setup import config
 
 # variables used in this file
-tiles = [pygame.image.load("sprites/tile0.png"),
+tiles = [pygame.image.load("sprites/misingTexture.png"),
          pygame.image.load("sprites/tile11.png")]
 playerSprite = pygame.image.load("sprites/player.png")
 screen = pygame.display.set_mode((config['native width'] * config['scale'], config['native hight'] * config['scale']))
@@ -23,7 +23,10 @@ def backround():
     screen.fill((84, 219, 239))
 
 def tile(x, y, tileID: int):
-    screen.blit(tiles[tileID], (x * config['scale'], (realY(y) - config['tile size']) * config['scale'] ))
+    try:
+        screen.blit(tiles[tileID], (x * config['scale'], (realY(y) - config['tile size']) * config['scale'] ))
+    except:
+        screen.blit(tiles[0], (x * config['scale'], (realY(y) - config['tile size']) * config['scale']))
 
 def player(x, y):
     screen.blit(playerSprite, (x  * config['scale'], (realY(y) - config['player size']) * config['scale']))

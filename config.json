@@ -4,6 +4,7 @@
 
 
   "gravity": 10,
+  "dreg" : 0.3,
 
 
   "native hight" : 180,
