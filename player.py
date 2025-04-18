@@ -68,19 +68,6 @@ class Player:
 
     def collision(self, timeDelay):
         for i in level:
-            if (i['x1'] * config['tile size'] < self.x + config['player size'] and
-                (i['x2'] + 1) * config['tile size'] > self.x):
-
-                if ((i['y2'] + 1) * config['tile size'] > self.y and
-                    (i['y2'] + 1) * config['tile size'] + self.speedY * timeDelay < self.y):
-                    self.speedY = 0
-                    self.y = (i['y2'] + 1) * config['tile size']
-
-                elif (i['y1'] * config['tile size'] < self.y + config['player size'] and
-                    i['y1'] * config['tile size'] + self.speedY * timeDelay > self.y + config['player size']):
-                    self.speedY = 0
-                    self.y = i['y1'] * config['tile size'] - config['player size']
-
             if (i['y1'] * config['tile size'] < self.y + config['player size'] and
                 (i['y2'] + 1) * config['tile size'] > self.y):
 
@@ -94,11 +81,24 @@ class Player:
                     self.speedX = 0
                     self.x = i['x1'] * config['tile size'] - config['player size']
 
+            if (i['x1'] * config['tile size'] < self.x + config['player size'] and
+                (i['x2'] + 1) * config['tile size'] > self.x):
+
+                if ((i['y2'] + 1) * config['tile size'] > self.y and
+                    (i['y2'] + 1) * config['tile size'] + self.speedY * timeDelay < self.y):
+                    self.speedY = 0
+                    self.y = (i['y2'] + 1) * config['tile size']
+
+                elif (i['y1'] * config['tile size'] < self.y + config['player size'] and
+                    i['y1'] * config['tile size'] + self.speedY * timeDelay > self.y + config['player size']):
+                    self.speedY = 0
+                    self.y = i['y1'] * config['tile size'] - config['player size']
+
     def florBelow(self):
         for i in level:
             if (i['x1'] * config['tile size'] < self.x + config['player size'] and
                 (i['x2'] + 1) * config['tile size'] > self.x and
-                (i['y2'] + 1) * config['tile size'] > self.y - 1 and
+                (i['y2'] + 1) * config['tile size'] > self.y - 0.01 and
                 i['y1'] * config['tile size'] < self.y):
                 return True
         return False
