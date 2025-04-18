@@ -2,10 +2,7 @@
   "resolution" : "720p",
   "maxFPS" : 60,
 
-
   "gravity": 10,
-  "dreg" : 0.3,
-
 
   "native hight" : 180,
   "native width" : 320,
@@ -13,6 +10,8 @@
   "player size": 18,
   "resolution to scaling" : {
     "180p" : 1,
+    "360p" : 2,
+    "540p" : 3,
     "720p" : 4,
     "1080p" : 6,
     "1440p" : 8,
