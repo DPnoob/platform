@@ -8,7 +8,8 @@ from setup import config
 
 # variables used in this file
 tiles = [pygame.image.load("sprites/misingTexture.png"),
-         pygame.image.load("sprites/tile11.png")]
+         pygame.image.load("sprites/tile11.png"),
+         pygame.image.load("sprites/selected.png"),]
 playerSprite = pygame.image.load("sprites/player.png")
 screen = pygame.display.set_mode((config['native width'] * config['scale'], config['native hight'] * config['scale']))
 
