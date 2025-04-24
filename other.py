@@ -13,4 +13,4 @@ def realY(y):
     return config['native hight'] - y
 
 def blockPosition(x,y):
-    return x // config['tile size'], y // config['tile size']
+    return int(x // config['tile size']), int(y // config['tile size'])

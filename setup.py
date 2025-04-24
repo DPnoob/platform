@@ -5,7 +5,7 @@ with open('config.json', 'r') as config_file:
     config = json.load(config_file)
 
 # lode level from level.txt
-with open('level.txt', 'r') as level_file:
+with open(config['level'], 'r') as level_file:
     level = level_file.read().split('\n')
 
 # unpacking level

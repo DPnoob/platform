@@ -1,6 +1,9 @@
 # normal imports
 import pygame
 
+import other
+
+
 # variables used in other files
 
 # imports from other files
@@ -85,8 +88,7 @@ def levelEditor():
                 desni_klik = pygame.mouse.get_pressed()[0]
 
         x, y = getRealMouse(pygame.mouse.get_pos())
-        bX = int(x // config['tile size'])
-        bY = int(y // config['tile size'])
+        bX, bY= other.blockPosition(x, y)
 
         if desni_klik_prej and desni_klik:
             desni_klik_prej = False
