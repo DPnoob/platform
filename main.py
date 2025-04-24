@@ -15,7 +15,7 @@ def startGame():
     from setup import config, level
     import renderGame
     import player
-    import imputs
+    import inputs
 
     running = True
     timeDelay = 0
@@ -30,7 +30,7 @@ def startGame():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
-                key_positions = imputs.keys()
+                key_positions = inputs.keys()
 
         #moving
         player.action(key_positions, timeDelay)
@@ -61,7 +61,6 @@ def startGame():
 def levelEditor():
     from setup import config, level
     import renderGame
-    import imputs
     from other import getRealMouse, blockPosition
 
     new_level = []
@@ -82,8 +81,6 @@ def levelEditor():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            #if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
-            #    key_positions = imputs.keys()
             if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
                 desni_klik = pygame.mouse.get_pressed()[0]
 
@@ -99,7 +96,6 @@ def levelEditor():
                     new_level.remove(tile)
                     ni_tile = False
                     break
-            print(bX, bY)
 
             if ni_tile:
                 new_level.append({'x': bX, 'y': bY, 'tileID': 1})
@@ -143,11 +139,6 @@ def levelEditor():
             new_level_hole[-1]['y2'] = new_level_united[i]['y1']
         else:
             new_level_hole.append({'x1': new_level_united[i]['x1'], 'x2': new_level_united[i]['x2'], 'y1': new_level_united[i]['y1'], 'y2': new_level_united[i]['y2'], 'tileID': new_level[i]['tileID']})
-
-    print(new_level_hole)
-    print(len(new_level_hole))
-
-
 
 
     with open(input('ime nove mape:\n'), 'w') as new_level_file:
