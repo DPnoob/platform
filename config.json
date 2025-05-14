@@ -1,7 +1,7 @@
 {
   "resolution" : "720p",
   "maxFPS" : 60,
-  "level" : "level.txt",
+  "level" : "level",
 
   "gravity": 10,
 

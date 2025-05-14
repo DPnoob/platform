@@ -75,6 +75,7 @@ def levelEditor():
     key_positions = {}
     desni_klik = False
     desni_klik_prej = True
+    tileW = 1
 
     while running:
         # events
@@ -83,6 +84,8 @@ def levelEditor():
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
                 desni_klik = pygame.mouse.get_pressed()[0]
+            if event.type == pygame.MOUSEWHEEL:
+                tileW = (tileW + event.y - 1 ) % 14 + 1
 
         x, y = getRealMouse(pygame.mouse.get_pos())
         bX, bY= other.blockPosition(x, y)
@@ -98,7 +101,7 @@ def levelEditor():
                     break
 
             if ni_tile:
-                new_level.append({'x': bX, 'y': bY, 'tileID': 1})
+                new_level.append({'x': bX, 'y': bY, 'tileID': tileW})
 
 
         elif not desni_klik:
@@ -108,8 +111,8 @@ def levelEditor():
         renderGame.backround()
         for block in new_level:
             renderGame.tile(config['tile size'] * block['x'], config['tile size'] * block['y'], block['tileID'])
-        renderGame.tile(bX * config['tile size'], bY * config['tile size'],1)
-        renderGame.tile(bX * config['tile size'], bY * config['tile size'], 2)
+        renderGame.tile(bX * config['tile size'], bY * config['tile size'],tileW)
+        renderGame.tile(bX * config['tile size'], bY * config['tile size'], -1)
 
 
         # other
@@ -132,15 +135,47 @@ def levelEditor():
 
     new_level_united.sort(key=lambda block: block['x1'] * 1000 + block['y1'])
 
-    new_level_hole = [{'x1' : new_level_united[0]['x1'], 'x2' : new_level_united[0]['x2'], 'y1' : new_level_united[0]['y1'], 'y2' : new_level_united[0]['y2'], 'tileID' : new_level[0]['tileID']}]
+    new_level_hole = [{'x1' : new_level_united[0]['x1'], 'x2' : new_level_united[0]['x2'], 'y1' : new_level_united[0]['y1'], 'y2' : new_level_united[0]['y2'], 'tileID' : new_level_united[0]['tileID']}]
 
     for i in range(1, len(new_level_united)):
-        if new_level_united[i]['x1'] == new_level_hole[-1]['x1'] and new_level_united[i]['x2'] == new_level_hole[-1]['x2'] and new_level_united[i]['y1'] - 1 == new_level_hole[-1]['y2']:
+        if new_level_united[i]['x1'] == new_level_hole[-1]['x1'] and new_level_united[i]['x2'] == new_level_hole[-1]['x2'] and new_level_united[i]['y1'] - 1 == new_level_hole[-1]['y2'] and new_level_united[i]['tileID'] == new_level_hole[-1]['tileID']:
             new_level_hole[-1]['y2'] = new_level_united[i]['y1']
         else:
-            new_level_hole.append({'x1': new_level_united[i]['x1'], 'x2': new_level_united[i]['x2'], 'y1': new_level_united[i]['y1'], 'y2': new_level_united[i]['y2'], 'tileID': new_level[i]['tileID']})
+            new_level_hole.append({'x1': new_level_united[i]['x1'], 'x2': new_level_united[i]['x2'], 'y1': new_level_united[i]['y1'], 'y2': new_level_united[i]['y2'], 'tileID': new_level_united[i]['tileID']})
 
+# -------------------------------------
 
-    with open(input('ime nove mape:\n'), 'w') as new_level_file:
+    new_level_united_collision = [
+        {'x1': new_level[0]['x'], 'x2': new_level[0]['x'], 'y1': new_level[0]['y'], 'y2': new_level[0]['y']}]
+
+    for i in range(1, len(new_level)):
+        if new_level[i]['y'] == new_level_united_collision[-1]['y1'] and new_level[i]['x'] - 1 == new_level_united_collision[-1]['x2']:
+            new_level_united_collision[-1]['x2'] = new_level[i]['x']
+        else:
+            new_level_united_collision.append(
+                {'x1': new_level[i]['x'], 'x2': new_level[i]['x'], 'y1': new_level[i]['y'], 'y2': new_level[i]['y']})
+
+    new_level_united_collision.sort(key=lambda block: block['x1'] * 1000 + block['y1'])
+
+    new_level_hole_collision = [
+        {'x1': new_level_united_collision[0]['x1'], 'x2': new_level_united_collision[0]['x2'], 'y1': new_level_united_collision[0]['y1'],
+         'y2': new_level_united_collision[0]['y2']}]
+
+    for i in range(1, len(new_level_united_collision)):
+        if new_level_united_collision[i]['x1'] == new_level_hole_collision[-1]['x1'] and new_level_united_collision[i]['x2'] == new_level_hole_collision[-1][
+            'x2'] and new_level_united_collision[i]['y1'] - 1 == new_level_hole_collision[-1]['y2']:
+            new_level_hole_collision[-1]['y2'] = new_level_united_collision[i]['y1']
+        else:
+            new_level_hole_collision.append(
+                {'x1': new_level_united_collision[i]['x1'], 'x2': new_level_united_collision[i]['x2'], 'y1': new_level_united_collision[i]['y1'],
+                 'y2': new_level_united_collision[i]['y2']})
+
+    # -----------------------
+    new_level_name = input('ime nove mape:\n')
+    with open(new_level_name + '.level', 'w') as new_level_file:
         for block in new_level_hole:
             print(block['x1'], block['y1'], block['x2'], block['y2'], block['tileID'], file=new_level_file)
+    # ------------------------
+    with open(new_level_name + '_collision.level', 'w') as new_level_file_collision:
+        for block in new_level_hole_collision:
+            print(block['x1'], block['y1'], block['x2'], block['y2'], file=new_level_file_collision)

@@ -4,7 +4,7 @@
 
 # imports from other files
 import vector
-from setup import config, level
+from setup import config, level_collision
 import renderGame
 
 # variables used in this file
@@ -67,7 +67,7 @@ class Player:
         except: pass
 
     def collision(self, timeDelay):
-        for i in level:
+        for i in level_collision:
             if (i['y1'] * config['tile size'] < self.y + config['player size'] and
                 (i['y2'] + 1) * config['tile size'] > self.y):
 
@@ -95,7 +95,7 @@ class Player:
                     self.y = i['y1'] * config['tile size'] - config['player size']
 
     def florBelow(self):
-        for i in level:
+        for i in level_collision:
             if (i['x1'] * config['tile size'] < self.x + config['player size'] and
                 (i['x2'] + 1) * config['tile size'] > self.x and
                 (i['y2'] + 1) * config['tile size'] > self.y - 0.01 and
